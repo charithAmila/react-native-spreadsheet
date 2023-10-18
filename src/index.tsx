@@ -1,3 +1,12 @@
-export function multiply(a: number, b: number): Promise<number> {
-  return Promise.resolve(a * b);
+import React from 'react';
+import { View, Text } from 'react-native';
+
+export interface ISpreadSheet {}
+
+export function SpreadSheet({}: ISpreadSheet) {
+  return (
+    <View>
+      <Text>SpreadSheet</Text>
+    </View>
+  );
 }
