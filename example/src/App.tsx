@@ -6,7 +6,7 @@ import { SpreadSheet } from 'react-native-spreadsheet';
 export default function App() {
   return (
     <View style={styles.container}>
-      <SpreadSheet />
+      <SpreadSheet sheets={[]} />
     </View>
   );
 }

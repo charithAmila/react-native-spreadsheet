@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { SpreadSheetProvider } from './SpreadSheetContext';
+import { App, type SpreadSheetProps } from './App';
 
-export interface ISpreadSheet {}
+export interface ISpreadSheet extends SpreadSheetProps {}
 
-export function SpreadSheet({}: ISpreadSheet) {
+export function SpreadSheet(props: ISpreadSheet) {
   return (
-    <View>
-      <Text>SpreadSheet</Text>
-    </View>
+    <SpreadSheetProvider>
+      <App {...props} />
+    </SpreadSheetProvider>
   );
 }
