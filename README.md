@@ -1,5 +1,7 @@
 # react-native-spreadsheet
 
+This package still building.
+
 react-native-spreadsheet
 
 ## Installation
@@ -15,7 +17,7 @@ import { SpreadSheet } from 'react-native-spreadsheet';
 
 // ...
 
-const result = await multiply(3, 7);
+<SpreadSheet />
 ```
 
 ## Contributing
