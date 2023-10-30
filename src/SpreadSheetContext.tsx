@@ -5,7 +5,6 @@ import React, {
   useState,
   type ReactElement,
   useCallback,
-  useEffect,
 } from 'react';
 import type { Sheet } from './types';
 import { defaultSheetCells } from './defaultSheetData';
@@ -15,7 +14,7 @@ export type SpreadSheetType = {
   sheet?: Sheet;
   addSheet: (sheet: Sheet) => void;
   addDefaultSheet: () => void;
-  replaceSheets: (sheet: Sheet[]) => void;
+  replaceSheets: (sheets: Sheet[]) => void;
   removeSheet: (sheetId: string | number) => void;
   setActiveSheet: (sheet: Sheet) => void;
 };
@@ -56,17 +55,10 @@ export function SpreadSheetProvider({
     setSheet(defaultSheet);
   }, []);
 
-  useEffect(() => {
-    addDefaultSheet();
-  }, [addDefaultSheet]);
-
-  const replaceSheets = (_sheets: Sheet[]) => {
-    if (!_sheets.length) {
-      addDefaultSheet();
-    } else {
-      setSheets([..._sheets]);
-    }
-  };
+  const replaceSheets = useCallback((_sheets: Sheet[]) => {
+    setSheets([..._sheets]);
+    setSheet(_sheets[0]);
+  }, []);
 
   const removeSheet = (sheetId: string | number) => {
     setSheets((prevSheets) =>
