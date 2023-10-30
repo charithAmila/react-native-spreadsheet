@@ -1,6 +1,15 @@
 export type Columns = string[];
 export type Rows = string[];
 
+export type Cell =
+  | {
+      value?: string | number | Date;
+      cellStyles?: CellStyles;
+      fontStyle?: CellFontStyle;
+      readonly?: boolean;
+    }
+  | '';
+
 export interface Sheet {
   id?: string;
   name?: string;
@@ -18,11 +27,4 @@ export interface CellStyles {
 export interface CellFontStyle {
   fontSize?: number;
   color?: string;
-}
-
-export interface Cell {
-  value?: string | number | Date;
-  cellStyles?: CellStyles;
-  fontStyle?: CellFontStyle;
-  readonly?: boolean;
 }

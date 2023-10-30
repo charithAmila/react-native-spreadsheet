@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useRef,
   type ForwardRefRenderFunction,
+  useCallback,
 } from 'react';
 import { FlatList, StyleSheet, View, Text } from 'react-native';
 import { useSpreadSheetContext } from '../SpreadSheetContext';
@@ -19,8 +20,7 @@ const Sidebar: ForwardRefRenderFunction<SideBarHandler, Props> = ({}, ref) => {
   const { sheet } = useSpreadSheetContext();
 
   const rows = useMemo(() => {
-    if (!sheet) return [];
-    return sheet.rows;
+    return sheet?.rows ?? [...Array(100)].map((_, i) => String(i + 1));
   }, [sheet]);
 
   useImperativeHandle(
@@ -39,6 +39,30 @@ const Sidebar: ForwardRefRenderFunction<SideBarHandler, Props> = ({}, ref) => {
     []
   );
 
+  const renderItem = useCallback(
+    ({ index, item }: { index: number; item: any }) => {
+      return (
+        <View key={index} style={[u.flex, u['flex-row'], u['flex-1']]}>
+          <View
+            style={[
+              u['w-50'],
+              u['border-1'],
+              u['border-solid'],
+              u.flex,
+              u['h-36'],
+              u['justify-center'],
+              u['items-center'],
+              styles.leftFixTd,
+            ]}
+          >
+            <Text style={u['text-center']}>{item ? item : ''}</Text>
+          </View>
+        </View>
+      );
+    },
+    []
+  );
+
   return (
     <FlatList
       ref={flatListRef}
@@ -46,26 +70,8 @@ const Sidebar: ForwardRefRenderFunction<SideBarHandler, Props> = ({}, ref) => {
       showsVerticalScrollIndicator={false}
       stickyHeaderIndices={[0]}
       scrollEnabled={false}
-      renderItem={({ index, item }) => {
-        return (
-          <View key={index} style={[u.flex, u['flex-row'], u['flex-1']]}>
-            <View
-              style={[
-                u['w-50'],
-                u['border-1'],
-                u['border-solid'],
-                u.flex,
-                u['h-36'],
-                u['justify-center'],
-                styles.leftFixTd,
-              ]}
-            >
-              <Text style={u['text-center']}>{item ? item : ''}</Text>
-            </View>
-          </View>
-        );
-      }}
-      data={rows}
+      renderItem={renderItem}
+      data={['', ...rows]}
     />
   );
 };
